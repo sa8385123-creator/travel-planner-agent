@@ -10,7 +10,10 @@ app.include_router(auth_router)
 # CORS for Next.js frontend running on http://localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+    "http://localhost:3000",
+    "https://travel-planner-agent-sigma.vercel.app",
+]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

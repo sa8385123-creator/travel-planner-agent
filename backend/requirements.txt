@@ -9,3 +9,5 @@ motor
 pydantic-settings
 python-dotenv
 httpx
+passlib
+bcrypt

@@ -1,0 +1,11 @@
+# Day 1: we'll pin exact versions when we install.
+fastapi
+uvicorn[standard]
+openai-agents
+openai
+sqlalchemy
+psycopg2-binary
+motor
+pydantic-settings
+python-dotenv
+httpx

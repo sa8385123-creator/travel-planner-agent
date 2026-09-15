@@ -1,0 +1,20 @@
+﻿{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "nvidia": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "NVIDIA API",
+      "options": {
+        "baseURL": "https://integrate.api.nvidia.com/v1"
+      },
+      "models": {
+        "nvidia/nemotron-3-super-120b-a12b": {
+          "name": "WORKING - Nemotron 3 Super 120B"
+        },
+        "nvidia/nemotron-3.5-lightning-30b-a3b": {
+          "name": "WORKING - Nemotron 3.5 Lightning 30B"
+        }
+      }
+    }
+  }
+}

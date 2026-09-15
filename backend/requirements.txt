@@ -11,3 +11,4 @@ python-dotenv
 httpx
 passlib
 bcrypt
+python-jose

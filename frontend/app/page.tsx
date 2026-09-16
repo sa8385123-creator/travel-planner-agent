@@ -262,7 +262,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex-1 min-h-dvh flex bg-[#F7F3EC]" onClick={handleClickOutside}>
+    <div className="flex-1 h-dvh flex bg-[#F7F3EC] overflow-hidden" onClick={handleClickOutside}>
       {/* Hamburger menu button (mobile only) */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}

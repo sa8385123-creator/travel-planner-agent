@@ -23,8 +23,8 @@ export default function LoginPage() {
     try {
       const endpoint =
         mode === "login"
-          ? `${process.env.NEXT_PUBLIC_API_URL}/auth/login"
-          : `${process.env.NEXT_PUBLIC_API_URL}/auth/signup";
+          ? `${process.env.NEXT_PUBLIC_API_URL}/auth/login`
+          : `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`;
 
       const res = await fetch(endpoint, {
         method: "POST",
@@ -136,3 +136,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

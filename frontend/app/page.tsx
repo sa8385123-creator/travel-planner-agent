@@ -262,7 +262,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex-1 min-h-0 flex bg-[#F7F3EC]" onClick={handleClickOutside}>
+    <div className="flex-1 min-h-dvh flex bg-[#F7F3EC]" onClick={handleClickOutside}>
       {/* Hamburger menu button (mobile only) */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -282,13 +282,13 @@ export default function Home() {
         />
       )}
       <aside
-        className={`
-          fixed inset-y-0 left-0 z-40 w-64
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          transform transition-transform duration-200
-          bg-[#1B3A4B] text-white flex flex-col h-full min-h-0
-          md:relative md:translate-x-0
-        `}
+className={`
+           fixed inset-y-0 left-0 z-40 w-64
+           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+           transform transition-transform duration-200
+           bg-[#1B3A4B] text-white flex flex-col h-dvh min-h-0
+           md:relative md:translate-x-0
+         `}
       >
         <div className="flex items-center gap-2 p-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15">
@@ -324,10 +324,10 @@ export default function Home() {
                   onClick={() => loadSessionMessages(session.id)}
                 >
                   {/* three dot button */}
-                  <button
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded"
-                    onClick={(e) => toggleMenu(session.id, e)}
-                  >
+<button
+                     className="absolute top-2 right-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity p-1 rounded"
+                     onClick={(e) => toggleMenu(session.id, e)}
+                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <circle cx="12" cy="12" r="1" />
                       <circle cx="12" cy="5" r="1" />
@@ -500,14 +500,15 @@ export default function Home() {
 
           <hr className="w-full border-t border-[#E0DCCC]" />
 
-          <div className="mt-2 flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-[#4A7C82]">
-            <Image
-              src="/profile.jpg"
-              width={56}
-              height={56}
-              alt="Profile"
-              className="rounded-full border-2 border-[#1B3A4B]/20 object-cover"
-            />
+<div className="mt-2 flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-[#4A7C82]">
+             <div className="relative h-10 w-10 sm:h-14 sm:w-14 shrink-0">
+               <Image
+                 src="/profile.jpg"
+                 fill
+                 alt="Profile"
+                 className="rounded-full border-2 border-[#1B3A4B]/20 object-cover"
+               />
+             </div>
             <span className="font-bold">Built by Syed Salman Ali</span>
             <a href="https://github.com/sa8385123-creator" target="_blank" rel="noopener noreferrer" className="hover:text-[#1B3A4B]">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

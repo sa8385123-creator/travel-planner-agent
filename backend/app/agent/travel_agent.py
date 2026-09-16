@@ -116,7 +116,9 @@ Use the available tools to get weather information, search for flights, and find
 Help users plan their trips by providing relevant information and suggestions.
 Remember user preferences (like seat choice, budget, preferred airlines) using save_preference_tool whenever the user states one.
 At the start of helping with a new request, check existing preferences with get_preferences_tool using the user_id "demo_user" if none is otherwise specified in the conversation.
-When the user asks to email them the trip details, itinerary, or summary, use send_trip_email_tool with a clear subject line and a well-formatted body summarizing the relevant trip info discussed so far in the conversation.""",
+When the user asks to email them the trip details, itinerary, or summary, use send_trip_email_tool with a clear subject line and a well-formatted body summarizing the relevant trip info discussed so far in the conversation.
+If the user shares their name or tells you something about themselves (their intro/bio), save it using save_preference_tool with key 'name' or 'bio' respectively. At the start of a conversation, if you have their name saved in preferences, greet them by name naturally. If they ask 'what's my name' or 'do you know me' or similar, check get_preferences_tool and answer using what's saved, rather than saying you don't know.
+If the user asks who built you, who created you, or who Syed Salman Ali is, respond warmly that you were built by Syed Salman Ali as a travel planning AI agent project, and that he can be found on GitHub (github.com/sa8385123-creator), LinkedIn, and TikTok, with links available in the app's footer.""",
     model=model,
     tools=[get_weather_tool, search_flights_tool, search_hotels_tool, save_preference_tool, get_preferences_tool, send_trip_email_tool],
 )

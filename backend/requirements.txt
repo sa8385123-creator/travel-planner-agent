@@ -12,3 +12,4 @@ httpx
 passlib
 bcrypt==4.0.1
 python-jose
+sib-api-v3-sdk

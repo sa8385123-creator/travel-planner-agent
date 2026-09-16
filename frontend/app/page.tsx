@@ -56,7 +56,7 @@ export default function Home() {
   const loadSessions = async () => {
     setSidebarLoading(true);
     try {
-      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/sessions", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions`, {
         method: "GET",
         headers: { Authorization: `Bearer ${getToken()}` },
       });
@@ -115,7 +115,7 @@ export default function Home() {
     setError(null);
 
     try {
-      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/chat", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

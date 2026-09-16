@@ -23,8 +23,8 @@ export default function LoginPage() {
     try {
       const endpoint =
         mode === "login"
-          ? "http://127.0.0.1:8000/auth/login"
-          : "http://127.0.0.1:8000/auth/signup";
+          ? `${process.env.NEXT_PUBLIC_API_URL}/auth/login"
+          : `${process.env.NEXT_PUBLIC_API_URL}/auth/signup";
 
       const res = await fetch(endpoint, {
         method: "POST",

@@ -56,7 +56,7 @@ export default function Home() {
   const loadSessions = async () => {
     setSidebarLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/sessions", {
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/sessions", {
         method: "GET",
         headers: { Authorization: `Bearer ${getToken()}` },
       });
@@ -77,7 +77,7 @@ export default function Home() {
 
   const loadSessionMessages = async (id: string) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/sessions/${id}/messages`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions/${id}/messages`, {
         method: "GET",
         headers: { Authorization: `Bearer ${getToken()}` },
       });
@@ -115,7 +115,7 @@ export default function Home() {
     setError(null);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/chat", {
+      const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -177,7 +177,7 @@ export default function Home() {
 
   const confirmRename = async (id: string) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/sessions/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -202,7 +202,7 @@ export default function Home() {
   const togglePin = async (session: Session, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      const res = await fetch(`http://127.0.0.1:8000/sessions/${session.id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions/${session.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -228,7 +228,7 @@ export default function Home() {
     e.stopPropagation();
     if (!window.confirm("Delete this chat?")) return;
     try {
-      const res = await fetch(`http://127.0.0.1:8000/sessions/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/sessions/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

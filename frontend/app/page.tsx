@@ -508,7 +508,7 @@ className={`
               className="flex-1 rounded-full border border-[#E0DCCC] bg-[#F7F3EC] px-5 py-3 text-[15px] text-[#1B3A4B] outline-none focus:ring-2 focus:ring-[#E8641C]"
             />
             <button
-              onClick={handleSend}
+            onClick={() => handleSend()}
               disabled={loading || !input.trim()}
               className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#E8641C] text-white transition-opacity disabled:opacity-40"
             >

@@ -120,6 +120,16 @@ async def chat_endpoint(
     # Capture tool calls made during this run
     calls = list(tool_call_log)
 
+    # Extract options if suggest_options tool was called
+    options = None
+    for call in reversed(calls):  # Look for most recent
+        if call.get("tool") == "suggest_options":
+            options = call.get("data")
+            if isinstance(options, list):
+                # Ensure all items are strings
+                options = [str(opt) for opt in options]
+            break
+
     # Save assistant message
     assistant_msg = Message(
         session_id=session_id,
@@ -142,6 +152,7 @@ async def chat_endpoint(
         reply=result.final_output,
         session_id=str(session_id),
         tool_calls=calls,
+        options=options,
     )
 
 

@@ -10,6 +10,7 @@ class ChatResponse(BaseModel):
     reply: str
     session_id: str
     tool_calls: List[dict] = []
+    options: Optional[List[str]] = None  # <-- NEW
 
 class SessionSummary(BaseModel):
     id: str

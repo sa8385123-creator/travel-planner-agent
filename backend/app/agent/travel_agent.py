@@ -288,6 +288,26 @@ def send_trip_email_tool(
 
 
 # ============================================================
+# SUGGEST OPTIONS TOOL
+# ============================================================
+
+@function_tool
+def suggest_options_tool(
+    options: List[str]
+):
+    """Present a list of options for the user to choose from.
+    
+    Args:
+        options: List of short string options (e.g. ["Lahore", "Karachi", "Islamabad"])
+    """
+    tool_call_log.append({
+        "tool": "suggest_options",
+        "data": options
+    })
+    return f"I've presented these options: {', '.join(options)}"
+
+
+# ============================================================
 # CREATE THE AGENT
 # ============================================================
 
@@ -339,6 +359,8 @@ were built by Syed Salman Ali as a travel planning
 AI agent project, and that he can be found on
 GitHub (github.com/sa8385123-creator), LinkedIn,
 and TikTok, with links available in the app's footer.
+
+When the user asks to choose between a small set of concrete options (like cities, travel mode, hotel type, budget tier, etc.), you MUST call the suggest_options_tool with 3-6 relevant choices in addition to your normal text reply.
 """,
 
     model=model,
@@ -349,7 +371,8 @@ and TikTok, with links available in the app's footer.
         search_hotels_tool,
         save_preference_tool,
         get_preferences_tool,
-        send_trip_email_tool
+        send_trip_email_tool,
+        suggest_options_tool
     ],
 )
 

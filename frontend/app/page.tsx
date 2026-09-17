@@ -14,6 +14,7 @@ type ChatMessage = {
   role: "user" | "assistant";
   content: string;
   toolCalls?: Array<{ tool: string; data: any }>;
+  options?: string[];  // <-- NEW
 };
 
 type Session = {
@@ -105,58 +106,61 @@ export default function Home() {
     setSidebarOpen(false);
   };
 
-  const handleSend = async () => {
-    if (!input.trim() || loading) return;
+const handleSend = async (overrideMessage?: string) => {
+     const messageToSend = overrideMessage ?? input;
+     if (!messageToSend.trim() || loading) return;
 
-    const userMessage: ChatMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setLoading(true);
-    setError(null);
+     const userMessage: ChatMessage = { role: "user", content: messageToSend };
+     setMessages((prev) => [...prev, userMessage]);
+     // Only clear input if we used the normal input (not override)
+     if (!overrideMessage) setInput("");
+     setLoading(true);
+     setError(null);
 
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify({
-          message: userMessage.content,
-          session_id: sessionId || undefined,
-        }),
-      });
+     try {
+       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
+         method: "POST",
+         headers: {
+           "Content-Type": "application/json",
+           Authorization: `Bearer ${getToken()}`,
+         },
+         body: JSON.stringify({
+           message: userMessage.content,
+           session_id: sessionId || undefined,
+         }),
+       });
 
-      if (res.status === 401) {
-        clearToken();
-        router.push("/login");
-        return;
-      }
+       if (res.status === 401) {
+         clearToken();
+         router.push("/login");
+         return;
+       }
 
-      if (!res.ok) throw new Error("Something went wrong reaching the planner.");
+       if (!res.ok) throw new Error("Something went wrong reaching the planner.");
 
-      const data = await res.json();
-      const assistantMessage: ChatMessage = {
-        role: "assistant",
-        content: data.reply,
-        toolCalls: data.tool_calls || [],
-      };
-      setMessages((prev) => [...prev, assistantMessage]);
-      if (data.session_id) setSessionId(data.session_id);
+       const data = await res.json();
+       const assistantMessage: ChatMessage = {
+         role: "assistant",
+         content: data.reply,
+         toolCalls: data.tool_calls || [],
+         options: data.options,  // <-- NEW
+       };
+       setMessages((prev) => [...prev, assistantMessage]);
+       if (data.session_id) setSessionId(data.session_id);
 
-      const emailCall = (data.tool_calls || []).find((tc: any) => tc.tool === "email");
-      if (emailCall) {
-        setEmailModalData({ to: emailCall.data.to, subject: emailCall.data.subject });
-        setEmailModalOpen(true);
-      }
+       const emailCall = (data.tool_calls || []).find((tc: any) => tc.tool === "email");
+       if (emailCall) {
+         setEmailModalData({ to: emailCall.data.to, subject: emailCall.data.subject });
+         setEmailModalOpen(true);
+       }
 
-      loadSessions();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An unknown error occurred.");
-    } finally {
-      setLoading(false);
-    }
-  };
+       loadSessions();
+     } catch (err) {
+       setError(err instanceof Error ? err.message : "An unknown error occurred.");
+     } finally {
+       setLoading(false);
+     }
+   };
 
   const handleLogout = () => {
     clearToken();
@@ -449,13 +453,27 @@ className={`
                       : "mr-auto max-w-[85%] sm:max-w-[75%] rounded-2xl border border-[#E0DCCC] bg-white px-4 py-3 text-[#1B3A4B] shadow-sm"
                   }
                 >
-                  {msg.role === "user" ? (
-                    msg.content
-                  ) : (
-                    <div className="space-y-2">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
-                    </div>
-                  )}
+{msg.role === "user" ? (
+                     msg.content
+                   ) : (
+                     <div className="space-y-2">
+                       <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                     </div>
+                   )}
+                   {/* OPTION BUTTONS */}
+                   {msg.options && msg.options.length > 0 && (
+                     <div className="flex flex-wrap gap-2 mt-3">
+                       {msg.options.map((opt, optIdx) => (
+<button
+                             key={optIdx}
+                             onClick={() => handleSend(opt)}
+                             className="flex items-center justify-center rounded-full border border-[#E0DCCC] bg-[#F7F3EC] px-3 py-2 text-sm text-[#1B3A4B] hover:bg-[#E0DCCC] transition-colors"
+                           >
+                             {opt}
+                           </button>
+                       ))}
+                     </div>
+                   )}
                 </div>
               </React.Fragment>
             ))}

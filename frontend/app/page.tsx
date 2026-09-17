@@ -465,12 +465,12 @@ className={`
                      <div className="flex flex-wrap gap-2 mt-3">
                        {msg.options.map((opt, optIdx) => (
 <button
-                             key={optIdx}
-                             onClick={() => handleSend(opt)}
-                             className="flex items-center justify-center rounded-full border border-[#E0DCCC] bg-[#F7F3EC] px-3 py-2 text-sm text-[#1B3A4B] hover:bg-[#E0DCCC] transition-colors"
-                           >
-                             {opt}
-                           </button>
+                              key={optIdx}
+                              onClick={() => handleSend(opt)}
+                              className="flex items-center justify-center rounded-full bg-[#E8641C] text-white px-3 py-2 text-sm hover:bg-[#BF5216] hover:scale-105 active:scale-95 transition-all duration-200"
+                            >
+                              {opt}
+                            </button>
                        ))}
                      </div>
                    )}

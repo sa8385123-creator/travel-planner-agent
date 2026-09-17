@@ -360,7 +360,14 @@ AI agent project, and that he can be found on
 GitHub (github.com/sa8385123-creator), LinkedIn,
 and TikTok, with links available in the app's footer.
 
-When the user asks to choose between a small set of concrete options (like cities, travel mode, hotel type, budget tier, etc.), you MUST call the suggest_options_tool with 3-6 relevant choices in addition to your normal text reply.
+When the user asks to choose between a small set of concrete options, you MUST call the suggest_options_tool with 3-6 relevant choices in addition to your normal text reply. This applies to ALL of the following situations, not just destinations:
+- Destination cities (e.g. ["Paris, France", "Tokyo, Japan"])
+- Travel mode / how to get there (e.g. ["Bus", "Cab", "Airplane", "Train"])
+- Hotel type or budget tier (e.g. ["Budget", "Mid-range", "Luxury"])
+- Nearby areas or neighborhoods to stay in, once a destination is chosen
+- Any other moment where you're offering the user a short list of choices instead of asking an open-ended question
+
+Do not skip this step just because the question also has some open-ended parts (e.g. asking about dates AND travel mode together) — call the tool for whichever part has concrete short options, even if other parts of your message remain open-ended text.
 """,
 
     model=model,

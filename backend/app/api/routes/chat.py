@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from typing import List
 
 from app.schemas.chat import (
@@ -127,7 +128,15 @@ async def chat_endpoint(
     )
 
     db.add(assistant_msg)
-    db.commit()
+
+    try:
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail="This chat session no longer exists. It may have been deleted.",
+        )
 
     return ChatResponse(
         reply=result.final_output,
